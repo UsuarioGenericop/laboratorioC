@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <math.h>
 const int N = 512;
 float Mat[N][N], MatDD[N][N], V1[N], V2[N], V3[N], V4[N]; // Declaracion de 2 matrices y 4 vectores
 
@@ -108,4 +109,32 @@ int NoZerosDiag(float M[N][N])
 int ValidateSystem(float M[N][N])
 {
     return (NoZerosDiag(M) && DiagonalDom(M));
+}
+
+// BLOQUE 3
+
+// Calcula el prodcuto entre la matriz (M) y el vector (vec) dejando el resultado en el vector (vectres)
+void Matrix_x_Vector(float M[N][N], float vect[N], float vectres[N])
+{
+    for (int r = 0; r < N; r++)
+    {
+        float total_fila = 0.0f;
+        for (int c = 0; c < N; c++)
+        {
+            total_fila += M[r][c] * vect[c];
+        }
+        vectres[r] = total_fila;
+    }
+}
+
+// Calcula la norma 2 de la diferencia entre dos vectores v1 y v2 retornando la longitud del vector resultante
+float Norm2(float v1[N], float v2[N])
+{
+    float vectorResultante[N], sumaCuadrados = 0.0f;
+    for (int i = 0; i < N; i++)
+    {
+        vectorResultante[i] = v1[i] - v2[i];
+        sumaCuadrados += vectorResultante[i] * vectorResultante[i];
+    }
+    return sqrt(sumaCuadrados);
 }
