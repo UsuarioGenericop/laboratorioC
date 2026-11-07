@@ -3,6 +3,8 @@
 const int N = 512;
 float Mat[N][N], MatDD[N][N], V1[N], V2[N], V3[N], V4[N]; // Declaracion de 2 matrices y 4 vectores
 
+// BLOQUE 1
+
 // Inicializa la matriz A y el vector b segun la semilla aleatoria
 // Si f_sdd == 1, se generan valores e nla diagonal principal para asegurar que la matriz sea estrictamente diagonal dominante
 // Si f_sdd == 0, se generan valores aleatorios sin garantizar la dominancia
@@ -63,4 +65,28 @@ void PrintRow(float mat[N][N], int row, int from, int numel)
         printf("%f ", mat[row][c]);
     }
     printf("\n");
+}
+
+// BLOQUE 2
+
+// Determina si la matriz es Diagonal Dominante (return 1)
+// Una matriz Diagonal Dominante es aquella en la que el valor absoluto de la diagonal es mas grande o igual que la suma de los valores absolutos de los otros elementos de la fila para todas las filas de la matriz
+int DiagonalDom(float M[N][N])
+{
+    for (int r = 0; r < N; r++)
+    {
+        float suma_fila = 0.0f;
+        for (int c = 0; c < N; c++)
+        {
+            if (r != c)
+            {
+                suma_fila += fabsf(M[r][c]);
+            }
+        }
+        if (fabsf(M[r][r]) < suma_fila) // Si el valor de la diagonal en la columna r es menor que la suma de esa fila retorna 0
+        {
+            return 0;
+        }
+    }
+    return 1;
 }
