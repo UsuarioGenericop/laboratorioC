@@ -90,3 +90,22 @@ int DiagonalDom(float M[N][N])
     }
     return 1;
 }
+
+// Verifica que la matriz no tenga 0 en la diagonal, si la matriz no tiene ceros en la diagonal (return 1)
+int NoZerosDiag(float M[N][N])
+{
+    for (int r = 0; r < N; r++)
+    {
+        if (M[r][r] == 0.0f) // Si el valor de la diagonal es 0 retorna 0
+        {
+            return 0;
+        }
+    }
+    return 1;
+}
+
+// Realizara las comprobaciones de DiagonalDom() y NoZerosDiag() y si el sistema puede resolverse mediante metodos iterativos (return 1)
+int ValidateSystem(float M[N][N])
+{
+    return (NoZerosDiag(M) && DiagonalDom(M));
+}
