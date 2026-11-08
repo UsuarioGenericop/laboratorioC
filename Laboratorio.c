@@ -387,5 +387,5 @@ int main()
     printf("  Elementos de la solucion\n\n");
     printf("Primeros 5 elementos de la solucion x: ");
     PrintVect(x, 0, 5);
-    return 1;
+    return 0;
 }
