@@ -136,5 +136,38 @@ float Norm2(float v1[N], float v2[N])
         vectorResultante[i] = v1[i] - v2[i];
         sumaCuadrados += vectorResultante[i] * vectorResultante[i];
     }
-    return sqrt(sumaCuadrados);
+    return sqrtf(sumaCuadrados);
+}
+
+// BLOQUE 4
+
+int Jacobi(float A[N][N], float b[N], float x[N], float tol, int max_iter)
+{
+    float resultados[N];
+    for (int iteraciones = 0; iteraciones < max_iter; iteraciones++) // Bucle para la cantidad de iteraciones
+    {
+        for (int r = 0; r < N; r++)
+        {
+            float suma_fila = 0.0f;
+            for (int c = 0; c < N; c++)
+            {
+                if (r != c)
+                {
+                    suma_fila += A[r][c] * x[c]; // Suma el producto de la matriz [r][c] entre el vector [c] excluyendo las diagonales
+                }
+            }
+            resultados[r] = (b[r] - suma_fila) / A[r][r]; // Despeja Xn restandole la suma de la fila al resultado y dividiendolo por el valor de la diagonal
+        }
+
+        float error = Norm2(resultados, x); // Se mide el cambio entre el intento k-1 y k porque a medida que esta diferencia tiende a 0 el intento k tiende a la respuesta correcta
+        for (int i = 0; i < N; i++)
+        {
+            x[i] = resultados[i]; // Se cambian los valores del vector de prueba por los resultados para la siguiente iteracion
+        }
+        if (error < tol)
+        {
+            return iteraciones + 1; // Si el error es menor a la tolerancia se termina la funcion (return iteraciones +1) se suma 1 a las iteraciones porque la variable empezo en 0
+        }
+    }
+    return -1; // Si el bucle termina con la cantidad de iteraciones (return -1)
 }
