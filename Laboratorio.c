@@ -130,17 +130,18 @@ void Matrix_x_Vector(float M[N][N], float vect[N], float vectres[N])
 // Calcula la norma 2 de la diferencia entre dos vectores v1 y v2 retornando la longitud del vector resultante
 float Norm2(float v1[N], float v2[N])
 {
-    float vectorResultante[N], sumaCuadrados = 0.0f;
+    float sumaCuadrados = 0.0f;
     for (int i = 0; i < N; i++)
     {
-        vectorResultante[i] = v1[i] - v2[i];
-        sumaCuadrados += vectorResultante[i] * vectorResultante[i];
+        float diff = v1[i] - v2[i];
+        sumaCuadrados += diff * diff;
     }
     return sqrtf(sumaCuadrados);
 }
 
 // BLOQUE 4
 
+// Metodo iterativo de Jacobi que retorna el numero de iteraciones realizadas hasta alcanzar la tolerancia o -1 si se llega al numero maximo de iteraciones
 int Jacobi(float A[N][N], float b[N], float x[N], float tol, int max_iter)
 {
     float resultados[N];
@@ -170,4 +171,34 @@ int Jacobi(float A[N][N], float b[N], float x[N], float tol, int max_iter)
         }
     }
     return -1; // Si el bucle termina con la cantidad de iteraciones (return -1)
+}
+
+// Metodo iterativo de GaussSeidel que retorna el numero de iteraciones realizadas hasta alacancar la tolerancia o -1 si se llega al numero maximo de iteraciones
+int GaussSeidel(float A[N][N], float b[N], float x[N], float tol, int max_iter)
+{
+    for (int iteraciones = 0; iteraciones < max_iter; iteraciones++) // Bucle para la cantidad de iteraciones
+    {
+        float sumaCuadradosError = 0.0f;
+        for (int r = 0; r < N; r++)
+        {
+            float suma_fila = 0.0f;
+            for (int c = 0; c < N; c++)
+            {
+                if (r != c)
+                {
+                    suma_fila += A[r][c] * x[c]; // Suma el producto de la matriz [r][c] entre el vector [c] excluyendo las diagonales
+                }
+            }
+            float x_antiguo = x[r];              // Guarda el valor de x[r] antes de cambiarlo
+            x[r] = (b[r] - suma_fila) / A[r][r]; // Despeja Xn restandole la suma de la fila al resultado y dividiendolo por el valor de la diagonal
+            float diferencia = x[r] - x_antiguo; // Se calcula el error con el cuadrado de la diferencia del valor que antigio de x y el nuevo valor de x
+            sumaCuadradosError += diferencia * diferencia;
+        }
+        float error = sqrtf(sumaCuadradosError); // No se puede calcular el error con la funcion Norm2 porque esta requere 2 vectores, el ejercicio especifica que para la funcion GaussSeidel solo debe haber un vector de solucion x
+        if (error < tol)
+        {
+            return iteraciones + 1; // Si el error es menor a la tolerancia se termina la funcion (return iteraciones +1) se suma 1 a las iteraciones porque la variable empezo en 0
+        }
+    }
+    return -1; // Si el bluce termina con la cantidad de iteraciones (return -1)
 }
