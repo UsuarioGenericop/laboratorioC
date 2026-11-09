@@ -68,6 +68,13 @@ void PrintVect(float vect[N], int from, int numel)
 // Imprime un cierto numero de elementos (numel) de una fila (row) de una matriz (mat) desde una posicion (from)
 void PrintRow(float mat[N][N], int row, int from, int numel)
 {
+    // Valida que la fila a imprimir este dentro de la matriz
+    if (row < 0 || row >= N)
+        return;
+    if (from + numel > N)
+    {
+        numel = N - from; // Corrige el valor de numel
+    }
     for (int c = from; c < numel + from; c++)
     {
         printf("%f\t", mat[row][c]);
