@@ -323,6 +323,22 @@ int main()
     if (ValidateSystem(Mat)) // Se asegura de que el sistema puede resolverse mediante metodos iterativos
     {
         printf("El sistema puede resolverse por metodos iterativos\n");
+        // Solucion con Jacobi
+        iter = Jacobi(Mat, b, x, Tol, MaxIter);
+        // Calcula la calidad de la solucion
+        Matrix_x_Vector(Mat, x, vectorCalidad);
+        residuo = Norm2(vectorCalidad, b);
+        // Muestra los reslutados
+        printf("--------------------------------------------------\n");
+        printf("  Iteraciones\n\n");
+        printf("Iteraciones realizadas: %d\n", iter);
+        printf("--------------------------------------------------\n");
+        printf("  Calidad de la solucion\n\n");
+        printf("Calidad de la solucion (Residuo): %f\n", residuo);
+        printf("--------------------------------------------------\n");
+        printf("  Elementos de la solucion\n\n");
+        printf("Primeros 5 elementos de la solucion x: ");
+        PrintVect(x, 0, 5);
     }
     else
     {
@@ -334,22 +350,6 @@ int main()
     {
         x[i] = 0;
     }
-    // Solucion con Jacobi
-    iter = Jacobi(Mat, b, x, Tol, MaxIter);
-    // Calcula la calidad de la solucion
-    Matrix_x_Vector(Mat, x, vectorCalidad);
-    residuo = Norm2(vectorCalidad, b);
-    // Muestra los reslutados
-    printf("--------------------------------------------------\n");
-    printf("  Iteraciones\n\n");
-    printf("Iteraciones realizadas: %d\n", iter);
-    printf("--------------------------------------------------\n");
-    printf("  Calidad de la solucion\n\n");
-    printf("Calidad de la solucion (Residuo): %f\n", residuo);
-    printf("--------------------------------------------------\n");
-    printf("  Elementos de la solucion\n\n");
-    printf("Primeros 5 elementos de la solucion x: ");
-    PrintVect(x, 0, 5);
 
     // Solucion con Gauss-Seidel
     printf("\n\n==================================================\n");
@@ -359,6 +359,23 @@ int main()
     if (ValidateSystem(Mat)) // Se asegura de que el sistema puede resolverse mediante metodos iterativos
     {
         printf("El sistema puede resolverse por metodos iterativos\n");
+        // Solucion con Gauss-Seidel
+        iter = GaussSeidel(Mat, b, x, Tol, MaxIter);
+        // Calcula la calidad de la solucion
+        Matrix_x_Vector(Mat, x, vectorCalidad);
+        residuo = Norm2(vectorCalidad, b);
+
+        // Muestra los resultados
+        printf("--------------------------------------------------\n");
+        printf("  Iteraciones\n\n");
+        printf("Iteraciones realizadas: %d\n", iter);
+        printf("--------------------------------------------------\n");
+        printf("  Calidad de la solucion\n\n");
+        printf("Calidad de la solucion (Residuo): %f\n", residuo);
+        printf("--------------------------------------------------\n");
+        printf("  Elementos de la solucion\n\n");
+        printf("Primeros 5 elementos de la solucion x: ");
+        PrintVect(x, 0, 5);
     }
     else
     {
@@ -370,22 +387,5 @@ int main()
         x[i] = 0;
     }
 
-    // Solucion con Gauss-Seidel
-    iter = GaussSeidel(Mat, b, x, Tol, MaxIter);
-    // Calcula la calidad de la solucion
-    Matrix_x_Vector(Mat, x, vectorCalidad);
-    residuo = Norm2(vectorCalidad, b);
-
-    // Muestra los resultados
-    printf("--------------------------------------------------\n");
-    printf("  Iteraciones\n\n");
-    printf("Iteraciones realizadas: %d\n", iter);
-    printf("--------------------------------------------------\n");
-    printf("  Calidad de la solucion\n\n");
-    printf("Calidad de la solucion (Residuo): %f\n", residuo);
-    printf("--------------------------------------------------\n");
-    printf("  Elementos de la solucion\n\n");
-    printf("Primeros 5 elementos de la solucion x: ");
-    PrintVect(x, 0, 5);
     return 0;
 }
